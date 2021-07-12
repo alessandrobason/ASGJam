@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/prefabs/molecule.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Textures/liquid_molecule.png" type="Texture" id=2]
+
+[node name="liquid_molecule" instance=ExtResource( 1 )]
+collision_layer = 2
+collision_mask = 2
+molecule_type = 0
+molecule_drag = 10.0
+
+[node name="sprite" parent="." index="0"]
+texture = ExtResource( 2 )

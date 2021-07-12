@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/funnel/molecule.gd" type="Script" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[node name="molecule" type="KinematicBody2D"]
+scale = Vector2( 2, 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+hor_velocity = 80.0
+down_velocity = 60.0
+scale_speed = 4.0
+
+[node name="sprite" type="Sprite" parent="."]
+z_index = -1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
