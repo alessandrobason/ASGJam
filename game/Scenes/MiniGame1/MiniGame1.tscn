@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/DavesAssets/Droplet.png" type="Texture" id=1]
+[ext_resource path="res://Assets/DavesAssets/CO2.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/MiniGame1/CO2.gd" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 8.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 32, 8 )
+
+[node name="MiniGame1" type="Node2D"]
+
+[node name="Droplet" type="KinematicBody2D" parent="."]
+position = Vector2( 24, 104 )
+
+[node name="Droplet" type="Sprite" parent="Droplet"]
+position = Vector2( -16, -24 )
+scale = Vector2( 0.333333, 0.333333 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CircleHitBox" type="CollisionShape2D" parent="Droplet"]
+shape = SubResource( 1 )
+
+[node name="CO2" type="KinematicBody2D" parent="."]
+position = Vector2( 152, 152 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CO2"]
+shape = SubResource( 2 )
+
+[node name="CO2" type="Sprite" parent="CO2"]
+position = Vector2( -32, -8 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 2 )
+centered = false
