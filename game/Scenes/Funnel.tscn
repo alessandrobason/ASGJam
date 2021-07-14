@@ -37,15 +37,6 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 centered = false
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="."]
-visible = false
-margin_right = 481.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
 [node name="GridContainer" type="GridContainer" parent="."]
 margin_left = 10.0
 margin_top = 10.0
