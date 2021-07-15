@@ -10,7 +10,8 @@ enum PipeRotation { Deg0, Deg90, Deg180, Deg270 }
 
 var mouse_offset := Vector2(0, 0)
 var mouse_in := false
-var current_cell := Rect2(0, 0, 64, 64)
+const tile_size := 128.0
+var current_cell := Rect2(0, 0, tile_size, tile_size)
 
 var possible_paths = [
 	[[0, true, false, true], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [1, false, true, true], [0, true, true, false], [0, true, true, false], [1, true, false, true], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [0, false, true, true], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [0, false, true, true], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [1, false, false, false], [0, false, false, false], [0, false, false, false], [1, true, true, false], [1, false, false, false], [0, false, false, false], [1, true, false, true], [0, true, false, true], [-1, false, false, false], [-1, false, false, false], [-1, false, false, false], [0, false, true, true], [-1, false, false, false], [0, true, false, true], [1, false, true, true], [0, true, true, false], [0, true, true, false], [0, true, true, false], [1, true, true, false], [-1, false, false, false], [0, false, true, true]],
@@ -34,12 +35,12 @@ func _process(_delta):
 	if mouse_in:
 		# get the cell from the mouse position
 		var mouse_pos = get_viewport().get_mouse_position() - mouse_offset
-		var rel_pos = (mouse_pos / 64.0).floor()
+		var rel_pos = (mouse_pos / tile_size).floor()
 		var cell = get_cell(rel_pos.x, rel_pos.y)
 		
 		# if it is a valid cell
 		if cell != INVALID_CELL:
-			current_cell.position = rel_pos * 64.0
+			current_cell.position = rel_pos * tile_size
 			update()
 			if Input.is_action_just_pressed("mouse_l"):
 				if is_modifiable(rel_pos.x, rel_pos.y):
@@ -58,10 +59,15 @@ func _draw():
 	draw_rect(current_cell, Color(0.8, 0.8, 0.1, 0.3))
 	
 func check_path():
-	var wasx := 0
-	var wasy := -1
 	var x := 0
 	var y := 0
+	var wasx := 0
+	var wasy := 0
+	var r = get_cell_rotation(x, y)
+	if r == PipeRotation.Deg0 or r == PipeRotation.Deg180:
+		wasx = -1
+	else:
+		wasy = -1
 	var count := 0
 	
 	while(count < 20):
@@ -90,7 +96,9 @@ func get_next_pipe(x, y, wasx, wasy) -> PoolIntArray:
 	if cell == PipeType.Straight:
 		match rot:
 			PipeRotation.Deg0, PipeRotation.Deg180:
-				if y != wasy: return FAILED
+				if y != wasy: 
+#					print("-> ", [x, y, wasx, wasy, cell, rot])
+					return FAILED
 				return PoolIntArray([x - wasx, 0])
 			PipeRotation.Deg90, PipeRotation.Deg270:
 				if x != wasx: return FAILED
@@ -98,22 +106,31 @@ func get_next_pipe(x, y, wasx, wasy) -> PoolIntArray:
 	elif cell == PipeType.Angle:
 		match rot:
 			PipeRotation.Deg0:
-				if wasx < x or wasy < y: return FAILED
+				if wasx < x or wasy < y:  
+#					print("-> ", [x, y, wasx, wasy, cell, rot])
+					return FAILED
 				if wasx > x: return PoolIntArray(DOWN)
 				else: return PoolIntArray(RIGHT)
 			PipeRotation.Deg90:
-				if wasx > x or wasy < y: return FAILED
+				if wasx > x or wasy < y:  
+#					print("-> ", [x, y, wasx, wasy, cell, rot])
+					return FAILED
 				if wasx < x: return PoolIntArray(DOWN)
 				else: return PoolIntArray(LEFT)
 			PipeRotation.Deg180:
-				if wasx > x or wasy > y: return FAILED
+				if wasx > x or wasy > y:  
+#					print("-> ", [x, y, wasx, wasy, cell, rot])
+					return FAILED
 				if wasx < x: return PoolIntArray(UP)
 				else: return PoolIntArray(LEFT)
 			PipeRotation.Deg270:
-				if wasx < x or wasy > y: return FAILED
+				if wasx < x or wasy > y:  
+#					print("-> ", [x, y, wasx, wasy, cell, rot])
+					return FAILED
 				if wasx > x: return PoolIntArray(UP)
 				else: return PoolIntArray(RIGHT)
-		
+		 
+#	print("||-> ", [x, y, wasx, wasy, cell, rot])
 	return FAILED
 
 func get_cell_rotation(x, y):
@@ -132,6 +149,8 @@ func get_cell_rotation(x, y):
 
 func make_random_path():
 	var index: int = rng.randi() % len(possible_paths)
+	print("path ", index)
+	index = 5
 	var path = possible_paths[index]
 	
 	var w := int(map_size.x)

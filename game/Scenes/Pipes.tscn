@@ -1,17 +1,18 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Assets/Textures/pipe.png" type="Texture" id=1]
-[ext_resource path="res://Assets/Textures/pipe_angle.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Textures/pipe_angle_drawn.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Textures/pipe_drawn.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/pipes/TileMap.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Textures/grid.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/pipes/Pipes.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Fonts/monogram.tres" type="DynamicFont" id=6]
 
 [sub_resource type="TileSet" id=1]
-0/name = "pipe.png 0"
-0/texture = ExtResource( 1 )
+0/name = "pipe_drawn.png 0"
+0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 64, 64 )
+0/region = Rect2( 0, 0, 128, 128 )
 0/tile_mode = 0
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
@@ -21,11 +22,11 @@
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
-1/name = "pipe_angle.png 1"
-1/texture = ExtResource( 2 )
+1/name = "pipe_angle_drawn.png 1"
+1/texture = ExtResource( 1 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
-1/region = Rect2( 0, 0, 64, 64 )
+1/region = Rect2( 0, 0, 128, 128 )
 1/tile_mode = 0
 1/occluder_offset = Vector2( 0, 0 )
 1/navigation_offset = Vector2( 0, 0 )
@@ -41,7 +42,7 @@ script = ExtResource( 5 )
 time = 120.0
 
 [node name="game" type="Node2D" parent="."]
-position = Vector2( 16, 32 )
+position = Vector2( 52, 78 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -49,19 +50,21 @@ __meta__ = {
 [node name="grid" type="Sprite" parent="game"]
 texture = ExtResource( 4 )
 centered = false
+offset = Vector2( -2, -2 )
 
 [node name="TileMap" type="TileMap" parent="game"]
 tile_set = SubResource( 1 )
+cell_size = Vector2( 128, 128 )
 format = 1
 script = ExtResource( 3 )
 
 [node name="time" type="Label" parent="."]
-margin_left = 16.0
-margin_top = 8.0
-margin_right = 145.0
-margin_bottom = 24.0
+margin_left = 51.0
+margin_top = 17.2356
+margin_right = 393.0
+margin_bottom = 55.2356
+custom_fonts/font = ExtResource( 6 )
 text = "Time Remaining: 100"
-align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
