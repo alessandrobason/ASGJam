@@ -1,16 +1,23 @@
 extends Node2D
 
+export var time := 120.0
+export var count := 30
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
+onready var score_text = $VBoxContainer/score
+onready var time_text = $VBoxContainer/time
 
+func _process(delta):
+	time -= delta
+	if time <= 0:
+		print("game finished")
+	update_text()
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _on_Collected():
+	print("collected")
+	count -= 1
+	if count == 0:
+		print("YESS")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
+func update_text():
+	time_text.text = "Time %d" % time
+	score_text.text = "Remaining %d" % count

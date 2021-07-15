@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Textures/funnel_drawn.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/prefabs/molecule_manager.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scripts/funnel/FunnelMain.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Fonts/monogram.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Assets/Textures/background_furnace.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/DavePreFab/tutorial.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24.7097, 129.242 )
@@ -86,5 +87,10 @@ centered = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Funnel"]
 position = Vector2( 27.5679, 131.763 )
 shape = SubResource( 1 )
+
+[node name="tutorial" parent="." instance=ExtResource( 7 )]
+tutorial_text = "Test funnel tutorial
+
+Press the left mouse button to continue"
 
 [connection signal="body_entered" from="Control/Funnel" to="." method="_on_Funnel_body_entered"]

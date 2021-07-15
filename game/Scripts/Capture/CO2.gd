@@ -1,30 +1,20 @@
-extends RigidBody2D
+extends KinematicBody2D
 
-# We want to create an upper limit to for the molecules velocity
-export var maxVelocity:=		Vector2(4000, 400)
+const upward_velocity := 100.0
 
-# Rate at which the molecules will accelarate to max lift
-export var liftRate = 50
+var is_liquid := false
 
-# Constructor (kinda) 
-func _ready() -> void:
-	# Set initial position
-	position = Vector2(5, 5)
-
-# the molecules will be ejected from the pipe with a 
-# horizontal impulse force this force will be dampened 
-# quickly after ejections so the movement of the molecules
-# are predominantly in the positive verticle axis
-	apply_central_impulse(Vector2(rand_range(500, maxVelocity.x), 0))
+func _physics_process(_delta):
+	var vel = Vector2(0.0, -upward_velocity)
 	
-	# Apply lify
-	add_central_force(Vector2(0, liftRate))
+	if is_liquid:
+		vel.y *= -5.0
+		
+	var ignore = move_and_slide(vel)
 
-	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	
-
-	if linear_velocity.y >= maxVelocity.y:
-		add_central_force(Vector2(0, liftRate * delta))
+func make_liquid():
+	if not is_liquid:
+		is_liquid = true
+		collision_layer = 2
+		collision_mask = 2
+		$Sprite.modulate = Color(0.1, 0.5, 0.9, 0.3)
