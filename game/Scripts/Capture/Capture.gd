@@ -7,6 +7,9 @@ onready var score_text = $VBoxContainer/score
 onready var time_text = $VBoxContainer/time
 onready var ending = $ending
 
+func _ready():
+	update_text()
+
 func _process(delta):
 	time -= delta
 	if time <= 0:

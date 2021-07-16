@@ -3,6 +3,7 @@ extends Control
 
 export(String, MULTILINE) var success_text setget set_success_text
 export(String, MULTILINE) var failure_text setget set_failure_text
+export(PackedScene) var next_scene = null
 
 onready var spr = $Sprite
 
@@ -38,7 +39,10 @@ func open(success: bool) -> void:
 func close():
 	if not Engine.editor_hint:
 		get_tree().paused = false
-		get_tree().quit()
+		if next_scene:
+			get_tree().change_scene_to(next_scene)
+		else:
+			get_tree().quit()
 
 func set_success_text(text):
 	success_text = text
