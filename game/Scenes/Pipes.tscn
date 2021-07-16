@@ -74,6 +74,14 @@ __meta__ = {
 [node name="tutorial" parent="." instance=ExtResource( 7 )]
 tutorial_text = "Pipes tutorial
 
+We’ve got our liquid carbon dioxide ready to be pumped underground… Oh No! the pipeline for the underground carbon dioxide storage is incomplete, can you help? Click the pipes to rotate them ninety degrees, connect the starting green pipe with the finishing red pipe.
 Press the left mouse button to continue."
 
 [node name="ending" parent="." instance=ExtResource( 8 )]
+success_text = "Success
+Success – You
+ have stored the carbon dioxide. A brighter future awaits. 
+
+press escape to return to the menu"
+failure_text = "Failure
+Carbon dioxide is freely released into the atmosphere, International scandal erupts, a black mark has been put on Carbon Capture tech  press escape to retry"

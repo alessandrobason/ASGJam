@@ -91,11 +91,16 @@ position = Vector2( 27.5679, 131.763 )
 shape = SubResource( 1 )
 
 [node name="tutorial" parent="." instance=ExtResource( 7 )]
-tutorial_text = "Test funnel tutorial
+tutorial_text = "By heating the liquid you can separate the carbon dioxide form the liquid it is dissolved in. Press the spacebar to heat the liquid raising the carbon dioxide, try to funnel all the carbon dioxide you can! 
 
 Press the left mouse button to continue"
 
 [node name="ending" parent="." instance=ExtResource( 8 )]
+success_text = "Success
+
+You heated and funnelled enough carbon dioxide, press escape to continue to the next stage!"
+failure_text = "Failure
+you didn’t funnel enough carbon dioxide, press escape to return to the main menu."
 next_scene = ExtResource( 9 )
 
 [connection signal="body_entered" from="Control/Funnel" to="." method="_on_Funnel_body_entered"]
