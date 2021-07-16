@@ -5,6 +5,7 @@ export var time := 30.0
 
 onready var score_label = $GridContainer/score
 onready var time_label  = $GridContainer/time
+onready var ending = $ending
 
 func _ready():
 	update_text()
@@ -12,7 +13,7 @@ func _ready():
 func _process(delta):
 	time -= delta
 	if time <= 0.0:
-		print("game finished")
+		ending.open(false)
 		time = 0.0
 	update_time_text()
 	
@@ -29,7 +30,7 @@ func update_text():
 func add_caught():
 	remaining -= 1
 	if remaining == 0:
-		print("game finished")
+		ending.open(true)
 	update_score_text()
 
 func _on_Funnel_body_entered(_body):

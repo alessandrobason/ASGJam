@@ -1,5 +1,7 @@
 extends TileMap
 
+onready var ending = get_node("../../ending")
+
 const map_size := Vector2(7, 7)
 
 export var start := Vector2(0, 0)
@@ -45,7 +47,7 @@ func _process(_delta):
 			if Input.is_action_just_pressed("mouse_l"):
 				if is_modifiable(rel_pos.x, rel_pos.y):
 					rotate_cell(rel_pos.x, rel_pos.y)
-					if(check_path()): print("path found")
+					if(check_path()): ending.open(true)
 					else: print("path not found")
 
 func _notification(what):
@@ -149,8 +151,6 @@ func get_cell_rotation(x, y):
 
 func make_random_path():
 	var index: int = rng.randi() % len(possible_paths)
-	print("path ", index)
-	index = 5
 	var path = possible_paths[index]
 	
 	var w := int(map_size.x)
